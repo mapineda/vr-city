@@ -13,16 +13,10 @@
   </body>
   <!-- three.js scripts  -->
   <script src='js/three.js'></script>
-  <!-- stereo effect -->
-  <script src='js/StereoEffect.js'></script>
-  <!-- first person controller -->
-  <script src='js/FirstPersonControls.js'></script>
-  <!-- device orientation controls -->
-  <script src='js/DeviceOrientationControls.js'></script>
-  <!-- orbit controls -->
-  <script src='js/OrbitControls.js'></script>
-  <!-- procedural city -->
-  <script src='js/threex.proceduralcity.js'></script>
+  <script src="https://raw.githubusercontent.com/jeromeetienne/threex.proceduralcity/master/threex.proceduralcity.js"></script>
+   <script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/controls/FirstPersonControls.js"></script>
+   <script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/controls/DeviceOrientationControls.js"></script>
+   <script src="https://raw.githubusercontent.com/mrdoob/three.js/master/examples/js/effects/StereoEffect.js"></script>
   <!-- ACTUAL PROJECT JS -->
   <script type='text/javascript'>
 
@@ -90,22 +84,26 @@
         controls.lookSpeed = 0.05;
         controls.lookVertical = true;
 
-    // set orientation controls
+    // add different controls if seen on mobile
     function SetOrientationControls(e) {
+      // if DeviceOrientation is not available, then return
       if (!e.alpha) {
         return;
       }
+      // create controls for mobile
       controls = new THREE.DeviceOrientationControls(camera, true);
+
       controls.connect();
       controls.update();
 
       element.addEventListener('click', fullscreen, false);
 
       window.removeEventListener('deviceorientation', setOrientationControls, true);
-
+      // resize the page
       window.addEventListener('resize', resize, false);
 	    setTimeout(resize, 1);
     }
+    // on resize of the window, check the width and height of the container div and update the camera and rendering
     function resize() {
       var width = container.offsetWidth;
       var height = container.offsetHeight;
@@ -116,6 +114,7 @@
       renderer.setSize(width, height);
       effect.setSize(width, height);
     }
+    // update the resizing and controls
     function update(dt) {
       resize();
 
@@ -143,7 +142,7 @@
       container.webkitRequestFullscreen();
     }
   }
-  
+
   </script>
 
 </html>
